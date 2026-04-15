@@ -5,12 +5,11 @@
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <meta name="description" content="ProShield Pest Control — Clinical-grade pest elimination. Termites, rodents, mosquitoes, bed bugs. Same-day emergency service. AI books your appointment instantly."/>
 <title>ProShield Pest Control | Fast. Guaranteed. Gone.</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script id="tailwind-config">
-tailwind.config = {
+<script>
+window.tailwind = { config: {
   darkMode: "class",
   theme: {
     extend: {
@@ -60,8 +59,9 @@ tailwind.config = {
       }
     }
   }
-}
+}}
 </script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <style>
   html { overflow-x: clip; }
   body { font-family: 'Inter', sans-serif; overflow-x: clip; }
