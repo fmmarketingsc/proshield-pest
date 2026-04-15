@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta name="description" content="ProShield Pest Control — Fast, guaranteed pest elimination. Rodents, roaches, termites, bed bugs, mosquitoes. Same-day emergency service available."/>
+<title>ProShield Pest Control | Fast. Guaranteed. Gone.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  html { overflow-x: clip; }
+  body { font-family: 'Inter', sans-serif; background: #0b1a0e; color: #fff; overflow-x: clip; }
+  :root {
+    --green:  #4ade80;
+    --green2: #16a34a;
+    --dark:   #0b1a0e;
+    --card:   #111f14;
+    --border: #1a3020;
+  }
+  section { scroll-margin-top: 72px; }
+  .btn-primary {
+    background: linear-gradient(135deg, #15803d, #4ade80);
+    color: #0b1a0e;
+    font-weight: 900;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    transition: filter .15s;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-outline {
+    border: 2px solid var(--green);
+    color: var(--green);
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    transition: all .15s;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-outline:hover { background: rgba(74,222,128,.1); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; }
+  input, select, textarea {
+    background: #0b1a0e;
+    border: 1px solid var(--border);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color .15s;
+    font-family: 'Inter', sans-serif;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--green); }
+  select option { background: #111f14; }
+  input::placeholder, textarea::placeholder { color: #2d4a36; }
+  .badge-green { background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.3); color: var(--green); border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; display: inline-block; }
+  .marquee-track { display: flex; gap: 16px; animation: marquee 35s linear infinite; width: max-content; }
+  .marquee-track-r { animation: marqueeR 38s linear infinite; }
+  @keyframes marquee  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes marqueeR { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+  .urgency-pulse { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0b1a0e; }
+  ::-webkit-scrollbar-thumb { background: #1a3020; border-radius: 3px; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ═══ HEADER ═══ -->
+<header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 flex items-center justify-between" style="background:rgba(11,26,14,.95);backdrop-filter:blur(12px);border-bottom:1px solid #1a3020">
+  <a href="#" class="flex items-center gap-2.5">
+    <div class="w-9 h-9 rounded-xl flex items-center justify-center text-lg" style="background:linear-gradient(135deg,#15803d,#4ade80)">🛡️</div>
+    <div>
+      <div class="font-black text-sm leading-none" style="font-family:'Epilogue',sans-serif">ProShield</div>
+      <div class="text-xs" style="color:#4b7a56">Pest Control</div>
+    </div>
+  </a>
+  <nav class="hidden md:flex items-center gap-6 text-sm font-medium" style="color:#79849b">
+    <a href="#services" class="hover:text-white transition">Services</a>
+    <a href="#quote"    class="hover:text-white transition">Get Quote</a>
+    <a href="#contact"  class="hover:text-white transition">Book Now</a>
+    <a href="#about"    class="hover:text-white transition">Why Us</a>
+  </nav>
+  <a href="#contact" class="btn-primary text-xs py-2.5 px-5">Free Inspection →</a>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="relative min-h-screen flex items-center pt-20" id="hero" style="background:radial-gradient(ellipse at 20% 50%, #0d2b12 0%, #0b1a0e 60%)">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-1/4 right-0 w-96 h-96 rounded-full opacity-10" style="background:radial-gradient(circle,#4ade80,transparent);filter:blur(60px)"></div>
+    <div class="absolute bottom-1/4 left-0 w-64 h-64 rounded-full opacity-5" style="background:radial-gradient(circle,#86efac,transparent);filter:blur(40px)"></div>
+  </div>
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-8 py-20 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <div class="badge-green mb-5">⚡ Same-Day Emergency Service</div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-none mb-6" style="font-family:'Epilogue',sans-serif">
+        Pests Gone.<br/><span style="color:#4ade80">Guaranteed.</span>
+      </h1>
+      <p class="text-lg mb-8 leading-relaxed" style="color:#79849b">Our AI books your appointment in minutes, and a certified exterminator arrives fast. No contracts. 100% satisfaction guaranteed.</p>
+      <div class="flex flex-wrap gap-3 mb-10">
+        <a href="#contact" class="btn-primary">Book Free Inspection →</a>
+        <a href="#quote"   class="btn-outline">Instant Quote</a>
+      </div>
+      <div class="flex flex-wrap gap-6 text-sm" style="color:#4b7a56">
+        <span>✓ Licensed & Insured</span>
+        <span>✓ Eco-Friendly Options</span>
+        <span>✓ Re-treat Guarantee</span>
+      </div>
+    </div>
+    <!-- Trust card -->
+    <div class="card p-6 sm:p-8">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style="background:#0d2b12">🤖</div>
+        <div>
+          <div class="font-bold text-sm">AI Pest Advisor</div>
+          <div class="text-xs" style="color:#4b7a56">Online now · Instant quotes</div>
+        </div>
+        <div class="ml-auto w-2 h-2 rounded-full urgency-pulse" style="background:#4ade80"></div>
+      </div>
+      <div class="space-y-3 mb-6">
+        <div class="rounded-xl px-4 py-3 text-sm" style="background:#0d2b12;color:#c0cce0;border-radius:4px 14px 14px 14px">"I keep seeing roaches in my kitchen at night..."</div>
+        <div class="rounded-xl px-4 py-3 text-sm ml-8" style="background:#15803d;color:#fff;border-radius:14px 14px 4px 14px">German cockroaches are common in kitchens. Treatment runs $150–$300 and is usually resolved in 1–2 visits. Want me to get a specialist to call you?</div>
+      </div>
+      <a href="#contact" class="btn-primary w-full text-center block">Get a Free Quote Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ URGENCY BANNER ═══ -->
+<div class="py-3 px-4 text-center text-sm font-bold" style="background:#0d2b12;border-top:1px solid #1a3020;border-bottom:1px solid #1a3020;color:#4ade80">
+  <span class="urgency-pulse inline-block">🐛</span>
+  <span style="color:#79849b"> &nbsp;Active infestations reported in your area today — </span>
+  <a href="#contact" style="color:#4ade80;text-decoration:none">Book before slots fill up →</a>
+</div>
+
+<!-- ═══ REVIEWS ═══ -->
+<section class="py-20 overflow-hidden" id="reviews" style="background:#0d1f10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8 mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+      <div class="badge-green mb-3">Customer Reviews</div>
+      <h2 class="text-3xl font-black" style="font-family:'Epilogue',sans-serif">4.9 Stars · 800+ Reviews</h2>
+    </div>
+    <div class="flex items-center gap-2 px-4 py-2 rounded-xl" style="background:#111f14;border:1px solid #1a3020">
+      <span class="text-yellow-400 text-xl">★★★★★</span>
+      <span class="text-sm font-bold">Google Verified</span>
+    </div>
+  </div>
+  <div class="overflow-hidden mb-4">
+    <div class="marquee-track" id="row1"></div>
+  </div>
+  <div class="overflow-hidden">
+    <div class="marquee-track marquee-track-r" id="row2"></div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT FORM ═══ -->
+<section class="py-24" id="contact" style="background:#0b1a0e">
+  <div class="max-w-5xl mx-auto px-4 sm:px-8 grid md:grid-cols-5 gap-10">
+    <div class="md:col-span-3">
+      <div class="badge-green mb-4">Book Service</div>
+      <h2 class="text-3xl sm:text-4xl font-black mb-2" style="font-family:'Epilogue',sans-serif">Get a Free Inspection</h2>
+      <p class="mb-8 text-sm" style="color:#4b7a56">Fill out the form — our AI specialist calls you within 15 minutes.</p>
+
+      <div id="formContainer">
+        <form onsubmit="handleSubmit(event)" class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input id="f-name"    type="text"  placeholder="Full name"    required />
+            <input id="f-phone"   type="tel"   placeholder="Phone number" required />
+          </div>
+          <input   id="f-email"   type="email" placeholder="Email (optional)" />
+          <input   id="f-address" type="text"  placeholder="Property address" />
+          <div class="grid sm:grid-cols-2 gap-4">
+            <select id="f-service">
+              <option value="">Service needed…</option>
+              <option>General Pest Control</option>
+              <option>Rodent Control</option>
+              <option>Cockroach Treatment</option>
+              <option>Termite Treatment</option>
+              <option>Bed Bug Treatment</option>
+              <option>Mosquito Control</option>
+              <option>Ant Control</option>
+              <option>Emergency / Same-Day</option>
+            </select>
+            <select id="f-pest">
+              <option value="">Pest type…</option>
+              <option>Roaches / Cockroaches</option>
+              <option>Rodents / Mice / Rats</option>
+              <option>Termites</option>
+              <option>Bed Bugs</option>
+              <option>Mosquitoes</option>
+              <option>Ants</option>
+              <option>Spiders</option>
+              <option>Wasps / Bees</option>
+              <option>Not Sure</option>
+            </select>
+          </div>
+          <textarea id="f-message" rows="3" placeholder="Describe what you're seeing and where…"></textarea>
+          <button type="submit" id="submitBtn" class="btn-primary w-full text-center">
+            Request Free Inspection →
+          </button>
+        </form>
+      </div>
+
+      <div id="confirmationMsg" class="hidden card p-6 text-center">
+        <div class="text-3xl mb-3">✅</div>
+        <p id="confirmText" class="text-sm leading-relaxed mb-2" style="color:#c0cce0"></p>
+        <p class="text-xs" style="color:#4b7a56">Check your email for confirmation and an edit link.</p>
+      </div>
+    </div>
+
+    <div class="md:col-span-2 space-y-4">
+      <div class="card p-5">
+        <div class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#4b7a56">Direct Contact</div>
+        <a href="tel:8005550199" class="flex items-center gap-3 mb-3 hover:opacity-80 transition">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm" style="background:#0d2b12">📞</div>
+          <div>
+            <div class="font-bold text-sm">(800) 555-0199</div>
+            <div class="text-xs" style="color:#4b7a56">24/7 Emergency Line</div>
+          </div>
+        </a>
+        <div class="text-xs py-2 px-3 rounded-lg" style="background:#0d2b12;color:#4ade80">⚡ AI calls you within 15 min</div>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#4b7a56">What We Treat</div>
+        <div class="flex flex-wrap gap-2">
+          {['🐀 Rodents','🪳 Roaches','🐜 Ants','🕷️ Spiders','🐝 Wasps','🦗 Mosquitoes','🪲 Termites','🐞 Bed Bugs'].map(p=>`<span class="text-xs px-2.5 py-1 rounded-lg font-medium" style="background:#0d2b12;color:#79849b">${p}</span>`).join('')}
+        </div>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#4b7a56">Guarantee</div>
+        <p class="text-sm leading-relaxed" style="color:#79849b">If pests return within 30 days, we come back <strong style="color:#4ade80">free of charge</strong>. No questions asked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="py-24" id="services" style="background:#0d1f10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8">
+    <div class="text-center mb-12">
+      <div class="badge-green mb-4">Our Services</div>
+      <h2 class="text-3xl sm:text-4xl font-black" style="font-family:'Epilogue',sans-serif">Every Pest. Every Time.</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Service cards -->
+      <div class="card p-6 hover:border-green-800 transition">
+        <div class="text-3xl mb-4">🐀</div>
+        <h3 class="font-black text-lg mb-2">Rodent Control</h3>
+        <p class="text-sm leading-relaxed mb-3" style="color:#4b7a56">Mice, rats, and squirrels. We seal entry points, set traps, and eliminate colonies.</p>
+        <div class="text-sm font-bold" style="color:#4ade80">From $200</div>
+      </div>
+      <div class="card p-6 hover:border-green-800 transition">
+        <div class="text-3xl mb-4">🪳</div>
+        <h3 class="font-black text-lg mb-2">Cockroach Treatment</h3>
+        <p class="text-sm leading-relaxed mb-3" style="color:#4b7a56">German, American, and Oriental roaches. Gel bait + spray treatment, usually resolved in 1–2 visits.</p>
+        <div class="text-sm font-bold" style="color:#4ade80">From $150</div>
+      </div>
+      <div class="card p-6 hover:border-green-800 transition">
+        <div class="text-3xl mb-4">🪲</div>
+        <h3 class="font-black text-lg mb-2">Termite Protection</h3>
+        <p class="text-sm leading-relaxed mb-3" style="color:#4b7a56">Subterranean and drywood termites. Liquid barriers, bait systems, and fumigation available.</p>
+        <div class="text-sm font-bold" style="color:#4ade80">From $500</div>
+      </div>
+      <div class="card p-6 hover:border-green-800 transition">
+        <div class="text-3xl mb-4">🐞</div>
+        <h3 class="font-black text-lg mb-2">Bed Bug Treatment</h3>
+        <p class="text-sm leading-relaxed mb-3" style="color:#4b7a56">Heat treatment and chemical options. We eliminate all life stages — eggs to adults.</p>
+        <div class="text-sm font-bold" style="color:#4ade80">From $400</div>
+      </div>
+      <div class="card p-6 hover:border-green-800 transition">
+        <div class="text-3xl mb-4">🦗</div>
+        <h3 class="font-black text-lg mb-2">Mosquito Control</h3>
+        <p class="text-sm leading-relaxed mb-3" style="color:#4b7a56">Monthly barrier spray keeps your yard mosquito-free all season long.</p>
+        <div class="text-sm font-bold" style="color:#4ade80">From $75/mo</div>
+      </div>
+      <div class="card p-6 hover:border-green-800 transition">
+        <div class="text-3xl mb-4">🐜</div>
+        <h3 class="font-black text-lg mb-2">General Pest Plan</h3>
+        <p class="text-sm leading-relaxed mb-3" style="color:#4b7a56">Quarterly treatments for ants, spiders, roaches, and more. Includes re-treat guarantee.</p>
+        <div class="text-sm font-bold" style="color:#4ade80">From $89/qtr</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSTANT QUOTE ═══ -->
+<section class="py-24" id="quote" style="background:#0b1a0e">
+  <div class="max-w-3xl mx-auto px-4 sm:px-8">
+    <div class="text-center mb-10">
+      <div class="badge-green mb-4">AI Estimator</div>
+      <h2 class="text-3xl sm:text-4xl font-black mb-3" style="font-family:'Epilogue',sans-serif">Get an Instant Quote</h2>
+      <p class="text-sm" style="color:#4b7a56">Tell us about your pest problem and get a real estimate in seconds.</p>
+    </div>
+    <div class="card p-6 sm:p-8">
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <select id="q-pest">
+          <option value="">Pest type…</option>
+          <option>Roaches / Cockroaches</option>
+          <option>Rodents / Mice / Rats</option>
+          <option>Termites</option>
+          <option>Bed Bugs</option>
+          <option>Mosquitoes</option>
+          <option>Ants</option>
+          <option>Spiders</option>
+          <option>General / Multiple</option>
+        </select>
+        <select id="q-size">
+          <option value="">Home size…</option>
+          <option>Apartment / Condo</option>
+          <option>Small House (under 1,500 sqft)</option>
+          <option>Medium House (1,500–3,000 sqft)</option>
+          <option>Large House (3,000+ sqft)</option>
+          <option>Commercial Property</option>
+        </select>
+      </div>
+      <select id="q-severity" class="mb-4">
+        <option value="">Severity…</option>
+        <option>Mild — just started noticing</option>
+        <option>Moderate — seeing them regularly</option>
+        <option>Severe — full infestation</option>
+      </select>
+      <textarea id="q-issue" rows="3" placeholder="Describe what you're seeing…" class="mb-4"></textarea>
+      <button onclick="getQuote()" id="quoteBtn" class="btn-primary w-full text-center">Get Instant Estimate →</button>
+
+      <div id="quoteResult" class="hidden mt-6 rounded-xl p-5" style="background:#0d2b12;border:1px solid #1a3020">
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#4b7a56">Estimated Range</div>
+            <div id="qRange" class="text-2xl font-black" style="color:#4ade80"></div>
+          </div>
+          <div>
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#4b7a56">Urgency</div>
+            <div id="qUrgency" class="text-sm font-bold"></div>
+          </div>
+        </div>
+        <div class="text-sm leading-relaxed mb-2" style="color:#c0cce0"><strong style="color:#79849b">Most likely:</strong> <span id="qLikely"></span></div>
+        <div class="text-sm leading-relaxed"       style="color:#c0cce0"><strong style="color:#79849b">Tip:</strong> <span id="qNote"></span></div>
+        <a href="#contact" class="btn-primary block text-center mt-5">Book Inspection Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY US ═══ -->
+<section class="py-24" id="about" style="background:#0d1f10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8">
+    <div class="text-center mb-12">
+      <div class="badge-green mb-4">Why ProShield</div>
+      <h2 class="text-3xl sm:text-4xl font-black" style="font-family:'Epilogue',sans-serif">Different By Design</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+      <div class="card p-6">
+        <div class="text-2xl mb-3">🤖</div>
+        <h3 class="font-bold mb-2">AI Books Your Appointment</h3>
+        <p class="text-sm" style="color:#4b7a56">Submit the form and our AI calls you within 15 minutes to confirm details and schedule your visit.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-2xl mb-3">🛡️</div>
+        <h3 class="font-bold mb-2">30-Day Re-Treat Guarantee</h3>
+        <p class="text-sm" style="color:#4b7a56">If pests return within 30 days of treatment, we come back and retreat at no additional charge.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-2xl mb-3">🌿</div>
+        <h3 class="font-bold mb-2">Eco-Friendly Options</h3>
+        <p class="text-sm" style="color:#4b7a56">Pet and family-safe treatments available. We use the minimum effective treatment to protect your home.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-2xl mb-3">⚡</div>
+        <h3 class="font-bold mb-2">Same-Day Emergency</h3>
+        <p class="text-sm" style="color:#4b7a56">Active infestation? Rodents near food or kids? We prioritize emergency calls and respond fast.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-2xl mb-3">📋</div>
+        <h3 class="font-bold mb-2">Licensed & Insured</h3>
+        <p class="text-sm" style="color:#4b7a56">All technicians are state-certified, background-checked, and fully insured for your peace of mind.</p>
+      </div>
+      <div class="card p-6">
+        <div class="text-2xl mb-3">💰</div>
+        <h3 class="font-bold mb-2">Upfront Pricing</h3>
+        <p class="text-sm" style="color:#4b7a56">No surprises. You get a clear quote before any work begins. No contracts required for one-time services.</p>
+      </div>
+    </div>
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="card p-5 text-center">
+        <div class="text-3xl font-black" style="color:#4ade80">5,000+</div>
+        <div class="text-xs mt-1" style="color:#4b7a56">Homes Protected</div>
+      </div>
+      <div class="card p-5 text-center">
+        <div class="text-3xl font-black" style="color:#4ade80">98%</div>
+        <div class="text-xs mt-1" style="color:#4b7a56">Satisfaction Rate</div>
+      </div>
+      <div class="card p-5 text-center">
+        <div class="text-3xl font-black" style="color:#4ade80">15 min</div>
+        <div class="text-xs mt-1" style="color:#4b7a56">Avg Response Time</div>
+      </div>
+      <div class="card p-5 text-center">
+        <div class="text-3xl font-black" style="color:#4ade80">10 yr</div>
+        <div class="text-xs mt-1" style="color:#4b7a56">In Business</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AI CHAT ═══ -->
+<section class="py-24 relative" style="background:#0b1a0e">
+  <div class="max-w-5xl mx-auto px-4 sm:px-8 grid md:grid-cols-2 gap-12 items-center">
+    <!-- Chat Widget -->
+    <div class="card overflow-hidden">
+      <div class="px-5 py-4 flex items-center gap-3" style="background:#0d2b12;border-bottom:1px solid #1a3020">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center text-sm" style="background:#15803d">🤖</div>
+        <div>
+          <div class="font-bold text-sm">ProShield AI Advisor</div>
+          <div class="text-xs flex items-center gap-1.5" style="color:#4b7a56">
+            <span class="w-1.5 h-1.5 rounded-full inline-block urgency-pulse" style="background:#4ade80"></span>
+            Online now
+          </div>
+        </div>
+      </div>
+      <div id="chatMessages" class="p-4 space-y-3 overflow-y-auto" style="height:280px">
+        <div class="flex gap-2.5">
+          <div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-xs" style="background:#15803d">🛡️</div>
+          <div class="rounded-2xl px-4 py-2.5 text-sm max-w-xs" style="background:#0d2b12;color:#c0cce0;border-radius:4px 14px 14px 14px">
+            Hi! I'm your ProShield pest advisor. Describe what you're seeing and I'll give you an honest assessment and price range.
+          </div>
+        </div>
+      </div>
+      <div id="typingIndicator" class="hidden px-4 pb-2">
+        <div class="flex gap-1.5 items-center">
+          <div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-xs" style="background:#15803d">🛡️</div>
+          <div class="rounded-full px-4 py-2 text-xs" style="background:#0d2b12;color:#4b7a56">typing…</div>
+        </div>
+      </div>
+      <div class="p-3" style="border-top:1px solid #1a3020">
+        <div class="flex gap-2">
+          <input id="chatInput" type="text" placeholder="Describe your pest problem…"
+            class="flex-1 rounded-full py-2.5 px-4 text-sm" style="border-color:#1a3020;font-size:14px"
+            onkeydown="if(event.key==='Enter')sendChat()" />
+          <button onclick="sendChat()" class="btn-primary py-2.5 px-4 rounded-full text-xs">Send</button>
+        </div>
+      </div>
+    </div>
+    <!-- Content -->
+    <div>
+      <div class="badge-green mb-4">24/7 AI Advisor</div>
+      <h2 class="text-3xl sm:text-4xl font-black mb-4" style="font-family:'Epilogue',sans-serif">Identify Your Pest.<br/>Get a Price.<br/>Book Instantly.</h2>
+      <p class="text-sm leading-relaxed mb-6" style="color:#4b7a56">Our AI advisor identifies your pest problem, gives you a real price range, and connects you with a certified technician — all in under 2 minutes.</p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3 text-sm" style="color:#79849b"><span style="color:#4ade80">✓</span> Pest identification from your description</div>
+        <div class="flex items-center gap-3 text-sm" style="color:#79849b"><span style="color:#4ade80">✓</span> Real price estimates before you commit</div>
+        <div class="flex items-center gap-3 text-sm" style="color:#79849b"><span style="color:#4ade80">✓</span> Escalates to a live specialist for emergencies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MAP ═══ -->
+<section class="py-16" id="service-area" style="background:#0d1f10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8">
+    <div class="text-center mb-8">
+      <div class="badge-green mb-3">Service Area</div>
+      <h2 class="text-2xl font-black" style="font-family:'Epilogue',sans-serif">We Come To You</h2>
+    </div>
+    <div id="map" class="rounded-2xl overflow-hidden" style="height:380px;border:1px solid #1a3020"></div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:#060e07;border-top:1px solid #1a3020">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8 py-12 grid sm:grid-cols-3 gap-8">
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#15803d,#4ade80)">🛡️</div>
+        <span class="font-black" style="font-family:'Epilogue',sans-serif">ProShield Pest Control</span>
+      </div>
+      <p class="text-sm" style="color:#4b7a56">Fast, guaranteed pest elimination powered by AI scheduling.</p>
+    </div>
+    <div>
+      <div class="text-xs font-bold uppercase tracking-widest mb-4" style="color:#4b7a56">Services</div>
+      <div class="space-y-2 text-sm" style="color:#79849b">
+        <div>Rodent Control</div><div>Cockroach Treatment</div><div>Termite Protection</div>
+        <div>Bed Bug Treatment</div><div>Mosquito Control</div>
+      </div>
+    </div>
+    <div>
+      <div class="text-xs font-bold uppercase tracking-widest mb-4" style="color:#4b7a56">Contact</div>
+      <div class="space-y-2 text-sm" style="color:#79849b">
+        <div><a href="tel:8005550199" class="hover:text-white transition">(800) 555-0199</a></div>
+        <div><a href="mailto:hello@proshieldpest.com" class="hover:text-white transition">hello@proshieldpest.com</a></div>
+        <div>24/7 Emergency Service</div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center py-4 text-xs" style="color:#2d4a36;border-top:1px solid #1a3020">
+    © 2025 ProShield Pest Control. All rights reserved. Licensed & Insured.
+  </div>
+</footer>
+
+<!-- Mobile Sticky CTA -->
+<div class="fixed bottom-0 left-0 right-0 z-40 p-3 sm:hidden" style="background:#0b1a0e;border-top:1px solid #1a3020;padding-bottom:max(12px,env(safe-area-inset-bottom))">
+  <a href="#contact" class="btn-primary w-full text-center block">Book Free Inspection →</a>
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// ── Reviews data ─────────────────────────────────────────────
+const reviews = [
+  { name:'Jessica M.', stars:5, text:'Sofia called me within 10 minutes. Roach problem is completely gone after one visit. Incredible service!', date:'2 weeks ago' },
+  { name:'David R.',   stars:5, text:'Had a serious rodent issue. ProShield sealed every entry point and the problem was solved in 3 days.', date:'1 month ago' },
+  { name:'Sarah K.',   stars:5, text:'Best pest company I\'ve ever used. The AI booking was so easy and the tech was on time and professional.', date:'3 weeks ago' },
+  { name:'Marcus T.',  stars:5, text:'Termite inspection came back clean after their treatment. Worth every penny for the peace of mind.', date:'2 months ago' },
+  { name:'Linda C.',   stars:5, text:'Mosquito control service is amazing — our backyard is actually usable again this summer!', date:'1 week ago' },
+  { name:'Robert H.',  stars:5, text:'Got a call from Sofia minutes after submitting. She was friendly, knowledgeable, and booked me same-day.', date:'3 weeks ago' },
+  { name:'Amy W.',     stars:5, text:'Bed bug treatment worked on the first try. They were thorough and explained everything clearly.', date:'1 month ago' },
+  { name:'James P.',   stars:5, text:'Quarterly plan has kept our home pest-free for over a year. Highly recommend ProShield!', date:'2 weeks ago' },
+];
+
+function reviewCard(r) {
+  return `<div class="flex-shrink-0 w-72 card p-5">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center font-black text-sm" style="background:linear-gradient(135deg,#15803d,#4ade80);color:#0b1a0e">${r.name[0]}</div>
+      <div><div class="font-bold text-sm">${r.name}</div><div class="text-xs" style="color:#4b7a56">${r.date}</div></div>
+      <div class="ml-auto text-yellow-400 text-sm">★★★★★</div>
+    </div>
+    <p class="text-sm leading-relaxed" style="color:#79849b">"${r.text}"</p>
+  </div>`;
+}
+
+function initReviews() {
+  const half = Math.ceil(reviews.length / 2);
+  const r1 = reviews.slice(0, half), r2 = reviews.slice(half);
+  const row1 = document.getElementById('row1'), row2 = document.getElementById('row2');
+  const html1 = r1.map(reviewCard).join(''), html2 = r2.map(reviewCard).join('');
+  row1.innerHTML = html1 + html1;
+  row2.innerHTML = html2 + html2;
+}
+initReviews();
+
+// ── Map ───────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl:true, scrollWheelZoom:false }).setView([39.5, -98.35], 4);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution:'© OpenStreetMap contributors © CARTO', maxZoom:18
+}).addTo(map);
+const serviceIcon = L.divIcon({
+  html:'<div style="background:linear-gradient(135deg,#15803d,#4ade80);width:14px;height:14px;border-radius:50%;border:2px solid #4ade80;box-shadow:0 0 8px rgba(74,222,128,.5)"></div>',
+  iconSize:[14,14], className:''
+});
+[[39.5,-98.35,'Nationwide Service']].forEach(([lat,lng,label]) => {
+  L.marker([lat,lng],{icon:serviceIcon}).addTo(map).bindPopup(`<b>${label}</b>`);
+});
+L.circle([39.5,-98.35],{color:'#4ade80',fillColor:'#4ade80',fillOpacity:.05,weight:1,radius:3000000}).addTo(map);
+
+// ── Form ──────────────────────────────────────────────────────
+let chatHistory = [];
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+
+  const body = {
+    name:    document.getElementById('f-name').value.trim(),
+    phone:   document.getElementById('f-phone').value.trim(),
+    email:   document.getElementById('f-email').value.trim(),
+    address: document.getElementById('f-address').value.trim(),
+    service: document.getElementById('f-service').value,
+    pestType:document.getElementById('f-pest').value,
+    message: document.getElementById('f-message').value.trim(),
+  };
+
+  try {
+    const r    = await fetch('/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+    const data = await r.json();
+    if (data.success) {
+      document.getElementById('confirmText').textContent = data.message;
+      document.getElementById('formContainer').classList.add('hidden');
+      document.getElementById('confirmationMsg').classList.remove('hidden');
+
+      if (data.leadId) {
+        await fetch('/api/call', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ ...body, leadId: data.leadId }),
+        });
+      }
+    }
+  } catch(err) {
+    btn.textContent = 'Request Free Inspection →'; btn.disabled = false;
+  }
+}
+
+// ── Quote ─────────────────────────────────────────────────────
+async function getQuote() {
+  const issue = document.getElementById('q-issue').value.trim();
+  if (!issue) { document.getElementById('q-issue').focus(); return; }
+
+  const btn = document.getElementById('quoteBtn');
+  btn.textContent = 'Analyzing…'; btn.disabled = true;
+
+  try {
+    const r    = await fetch('/api/quote', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        pestType: document.getElementById('q-pest').value,
+        homeSize: document.getElementById('q-size').value,
+        severity: document.getElementById('q-severity').value,
+        issue,
+      }),
+    });
+    const data = await r.json();
+    if (data.success) {
+      const e = data.estimate;
+      const urgencyColors = { low:'#4ade80', medium:'#fbbf24', high:'#f97316', emergency:'#ef4444' };
+      document.getElementById('qRange').textContent   = e.range;
+      document.getElementById('qUrgency').textContent = e.urgency?.toUpperCase();
+      document.getElementById('qUrgency').style.color = urgencyColors[e.urgency] || '#4ade80';
+      document.getElementById('qLikely').textContent  = e.mostLikely;
+      document.getElementById('qNote').textContent    = e.note;
+      document.getElementById('quoteResult').classList.remove('hidden');
+    }
+  } catch(err) { console.error(err); }
+  btn.textContent = 'Get Instant Estimate →'; btn.disabled = false;
+}
+
+// ── Chat ──────────────────────────────────────────────────────
+function appendMsg(text, isUser) {
+  const box = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'flex gap-2.5' + (isUser ? ' justify-end' : '');
+  div.innerHTML = isUser
+    ? `<div class="rounded-2xl px-4 py-2.5 text-sm max-w-xs" style="background:#15803d;color:#fff;border-radius:14px 14px 4px 14px">${text}</div>`
+    : `<div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-xs" style="background:#15803d">🛡️</div>
+       <div class="rounded-2xl px-4 py-2.5 text-sm max-w-xs" style="background:#0d2b12;color:#c0cce0;border-radius:4px 14px 14px 14px">${text}</div>`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg   = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  appendMsg(msg, true);
+  chatHistory.push({ role:'user', content:msg });
+
+  const typing = document.getElementById('typingIndicator');
+  typing.classList.remove('hidden');
+
+  try {
+    const r    = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ messages:chatHistory }) });
+    const data = await r.json();
+    const reply = data.reply || "Let me connect you with a specialist.";
+    chatHistory.push({ role:'assistant', content:reply });
+    appendMsg(reply, false);
+  } catch {
+    appendMsg("Connection error. Please call us at (800) 555-0199.", false);
+  } finally {
+    typing.classList.add('hidden');
+  }
+}
+</script>
+</body>
+</html>
